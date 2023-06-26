@@ -1,6 +1,6 @@
 <template>
   <div class="form-row">
-    <div class="col-md-12 d-flex align-items-center">
+    <div class="d-flex align-items-center bias">
       <img :src="icon" alt="" class="form-icon" />
       <div class="input-container">
         <input
@@ -53,6 +53,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.bias {
+  position: relative;
+  left: -9.5px;
+}
 img {
   width: 20px;
   height: 20px;

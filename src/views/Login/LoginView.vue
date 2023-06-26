@@ -19,6 +19,12 @@
         :inputStyle="inputStylePass"
         @update:value="formData.password = $event"
       />
+      <div class="checkbox-container"></div>
+      <CheckBox
+        boxName="auto-login"
+        :checked="autoLogin"
+        :callback="handleAutoLogin"
+      />
       <button type="button" class="btn btn-outline-primary" @click="submitForm">
         <span class="form-btn-text"> LOGIN</span>
       </button>
@@ -30,10 +36,12 @@
 import { ref } from "vue";
 import { ElMessage } from "element-plus";
 import UserForm from "@/components/login/UserForm.vue";
+import CheckBox from "@/components/login/CheckBox.vue";
 
 export default {
   components: {
     UserForm,
+    CheckBox,
   },
   setup() {
     const formData = {
@@ -59,11 +67,23 @@ export default {
       else inputStylePass.value = "form-control border border-primary";
     };
 
+    // const autoLogin = () => {
+    //   console.log(1);
+    // };
+
+    const autoLogin = ref(false);
+
+    const handleAutoLogin = (value) => {
+      autoLogin.value = value;
+    };
+
     return {
       formData,
       submitForm,
       inputStyleUser,
       inputStylePass,
+      autoLogin,
+      handleAutoLogin,
     };
   },
 };
@@ -102,7 +122,10 @@ export default {
   top: 50px;
 
   button {
-    width: 80px;
+    width: 250px;
+  }
+  .checkbox-container {
+    width: 250px;
   }
 }
 </style>
