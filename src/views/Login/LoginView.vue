@@ -5,26 +5,14 @@
     </div>
 
     <div class="form-container">
-      <UserForm
-        :value="formData.username"
-        :icon="require('@/assets/login/user.png')"
-        placeholder="username"
-        :inputStyle="inputStyleUser"
-        @update:value="formData.username = $event"
-      />
-      <UserForm
-        :value="formData.password"
-        :icon="require('@/assets/login/lock.png')"
-        placeholder="password"
-        :inputStyle="inputStylePass"
-        @update:value="formData.password = $event"
-      />
-      <div class="checkbox-container"></div>
-      <CheckBox
-        boxName="auto-login"
-        :checked="autoLogin"
-        :callback="handleAutoLogin"
-      />
+      <UserForm :value="formData.username" :icon="require('@/assets/login/user.png')" placeholder="username"
+        :inputStyle="inputStyleUser" @update:value="formData.username = $event" />
+      <UserForm :value="formData.password" :icon="require('@/assets/login/lock.png')" placeholder="password"
+        :inputStyle="inputStylePass" @update:value="formData.password = $event" />
+      <div class="checkbox-container">
+        <CheckBox boxName="Auto login" :checked="autoLogin" :callback="handleAutoLogin" />
+        <CheckBox boxName="Remember Password" :checked="RemPasWor" :callback="handleRemPasWor" />
+      </div>
       <button type="button" class="btn btn-outline-primary" @click="submitForm">
         <span class="form-btn-text"> LOGIN</span>
       </button>
@@ -67,15 +55,19 @@ export default {
       else inputStylePass.value = "form-control border border-primary";
     };
 
-    // const autoLogin = () => {
-    //   console.log(1);
-    // };
-
     const autoLogin = ref(false);
+    const RemPasWor = ref(false)
 
     const handleAutoLogin = (value) => {
       autoLogin.value = value;
+      if (autoLogin.value) RemPasWor.value = value;
+      window.localStorage.setItem("auto_login", autoLogin.value)
     };
+
+    const handleRemPasWor = (value) => {
+      RemPasWor.value = value;
+      window.localStorage.setItem("remember_password", RemPasWor.value)
+    }
 
     return {
       formData,
@@ -84,6 +76,8 @@ export default {
       inputStylePass,
       autoLogin,
       handleAutoLogin,
+      RemPasWor,
+      handleRemPasWor
     };
   },
 };
@@ -113,6 +107,7 @@ export default {
     }
   }
 }
+
 .form-container {
   display: flex;
   flex-direction: column;
@@ -124,8 +119,11 @@ export default {
   button {
     width: 250px;
   }
+
   .checkbox-container {
     width: 250px;
+    display: flex;
+    justify-content: space-between;
   }
 }
 </style>
